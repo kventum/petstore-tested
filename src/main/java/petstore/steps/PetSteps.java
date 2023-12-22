@@ -14,21 +14,22 @@ import static org.apache.http.HttpStatus.SC_OK;
 import static petstore.constants.Endpoints.*;
 
 public class PetSteps {
-    private static final RequestSpecification REQUEST_SPECIFICATION =
+    public static final RequestSpecification REQUEST_SPECIFICATION =
             new RequestSpecBuilder()
                     .setBaseUri(BASE_URL)
                     .setBasePath(PET)
                     .setContentType(ContentType.JSON)
+                    .addHeader("api_key", "special-key")
                     .build();
 
-    public static Pet createPet(Pet request) {
+    public static Pet createPet(Pet request, int statusCode) {
         return given()
                 .spec(REQUEST_SPECIFICATION)
                 .body(request)
                 .when().log().all()
                 .post()
                 .then().log().all()
-                .statusCode(SC_OK)
+                .statusCode(statusCode)
                 .extract().as(Pet.class);
     }
 

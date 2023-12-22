@@ -1,6 +1,7 @@
 package api.pets;
 
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import petstore.models.pets.Category;
 import petstore.models.pets.Pet;
@@ -8,13 +9,20 @@ import petstore.models.pets.PetStatus;
 
 import java.util.List;
 
+import static io.restassured.RestAssured.given;
+import static org.apache.http.HttpStatus.SC_METHOD_NOT_ALLOWED;
+import static org.apache.http.HttpStatus.SC_OK;
 import static org.junit.jupiter.api.Assertions.*;
 import static petstore.constants.AssertMessages.*;
+import static petstore.constants.Others.NEGATIVE;
+import static petstore.constants.Others.POSITIVE;
+import static petstore.steps.PetSteps.REQUEST_SPECIFICATION;
 import static petstore.steps.PetSteps.createPet;
 
 public class CreatePetTest {
 
     @Test
+    @Tag(POSITIVE)
     @DisplayName("Создание питомца со всеми валидными полями")
     public void createValidPet() {
         String petName = "Cracker";
@@ -30,7 +38,7 @@ public class CreatePetTest {
                 .status(PetStatus.pending)
                 .build();
 
-        Pet response = createPet(request);
+        Pet response = createPet(request, SC_OK);
 
         assertAll(
                 () -> assertNotNull(response.getId(), PET_ID_NULL),
@@ -42,5 +50,87 @@ public class CreatePetTest {
                 () -> assertNotNull(response.getTags().get(0).getId(), TAG_ID_NULL),
                 () -> assertEquals(PetStatus.pending, response.getStatus(), PET_STATUS_WRONG)
         );
+    }
+
+    @Test
+    @Tag(POSITIVE)
+    @DisplayName("Создание питомца только с обязательными полями")
+    public void createPetWithRequiredFields() {
+        String petName = "Requi";
+        String photoUrl = "https://www.mybestfrienddogcare.co.uk/wp-content/uploads/2020/09/Doggy-Day-Care-in-Andover-.jpg";
+        Pet request = Pet.builder()
+                .name(petName)
+                .photoUrls(new String[]{photoUrl})
+                .build();
+
+        Pet response = createPet(request, SC_OK);
+        assertAll(
+                () -> assertEquals(petName, response.getName(), PET_NAME_WRONG),
+                () -> assertEquals(photoUrl, response.getPhotoUrls()[0], PET_PHOTO_URL_WRONG),
+                () -> assertNotNull(response.getId(), PET_ID_NULL),
+                () -> assertNull(response.getCategory(), "Pet has category"),
+                () -> assertNull(response.getTags(), "Pet has tags"),
+                () -> assertNull(response.getStatus(), "Pet has status")
+        );
+    }
+
+    @Test
+    @Tag(NEGATIVE)
+    @DisplayName("Создание питомца без имени")
+    public void createPetWithoutName() {
+        String photoUrl = "https://www.mybestfrienddogcare.co.uk/wp-content/uploads/2020/09/Doggy-Day-Care-in-Andover-.jpg";
+        Pet request = Pet.builder()
+                .photoUrls(new String[]{photoUrl})
+                .build();
+
+        Pet response = createPet(request, SC_METHOD_NOT_ALLOWED);
+        assertAll(
+                () -> assertNull(response.getName(), "Pet name is not null"),
+                () -> assertEquals(photoUrl, response.getPhotoUrls()[0], PET_PHOTO_URL_WRONG),
+                () -> assertNotNull(response.getId(), PET_ID_NULL),
+                () -> assertNull(response.getCategory(), "Pet has category"),
+                () -> assertNull(response.getTags(), "Pet has tags"),
+                () -> assertNull(response.getStatus(), "Pet has status")
+        );
+    }
+
+    @Test
+    @Tag(NEGATIVE)
+    @DisplayName("Создание питомца без фото")
+    public void createPetWithoutPhotoUrls() {
+        String petName = "Garfield";
+        Pet request = Pet.builder()
+                .name(petName)
+                .build();
+
+        Pet response = createPet(request, SC_METHOD_NOT_ALLOWED);
+        assertAll(
+                () -> assertEquals(petName, response.getName(), PET_NAME_WRONG),
+                () -> assertNull(response.getPhotoUrls(), "Pet has photo urls"),
+                () -> assertNotNull(response.getId(), PET_ID_NULL),
+                () -> assertNull(response.getCategory(), "Pet has category"),
+                () -> assertNull(response.getTags(), "Pet has tags"),
+                () -> assertNull(response.getStatus(), "Pet has status")
+        );
+    }
+
+    @Test
+    @Tag(NEGATIVE)
+    @DisplayName("Создание питомца методом GET")
+    public void createPetByGetRequest() {
+        String petName = "Ceprany";
+        String photoUrl = "https://www.mybestfrienddogcare.co.uk/wp-content/uploads/2020/09/Doggy-Day-Care-in-Andover-.jpg";
+        Pet request = Pet.builder()
+                .name(petName)
+                .photoUrls(new String[]{photoUrl})
+                .build();
+
+        given()
+                .spec(REQUEST_SPECIFICATION)
+                .body(request)
+                .when().log().all()
+                .get()
+                .then().log().all()
+                .statusCode(SC_METHOD_NOT_ALLOWED);
     }
 }
