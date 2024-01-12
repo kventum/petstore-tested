@@ -2,6 +2,7 @@ package petstore.steps;
 
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
+import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import petstore.models.pets.Pet;
@@ -30,6 +31,7 @@ public class PetSteps {
                 .post()
                 .then().log().all()
                 .statusCode(statusCode)
+                .header("Content-Type", ContentType.JSON.toString())
                 .extract().as(Pet.class);
     }
 
@@ -40,6 +42,7 @@ public class PetSteps {
                 .get(FIND_BY_STATUS_EP)
                 .then().log().all()
                 .statusCode(SC_OK)
+                .header("Content-Type", ContentType.JSON.toString())
                 .extract().response();
     }
 
@@ -62,5 +65,16 @@ public class PetSteps {
                 .then().log().all()
                 .statusCode(SC_OK)
                 .extract().jsonPath().getList(".", Pet.class);
+    }
+
+    public static ExtractableResponse<Response> getPetById(Object id, int statusCode) {
+        return given()
+                .spec(REQUEST_SPECIFICATION)
+                .pathParam("id", id)
+                .when().log().all()
+                .get(GET_PET_BY_ID)
+                .then().log().all()
+                .statusCode(statusCode)
+                .extract();
     }
 }

@@ -32,12 +32,10 @@ public class FindPetsTest {
     public void findPetWithoutStatusFilter() {
         Response response = getPetsResponse();
         List<Pet> pets = getPets();
-        String contentType = response.getHeader("Content-Type");
         LocalDateTime responseTime = LocalDateTime.parse(response.getHeader("Date"), DateTimeFormatter.RFC_1123_DATE_TIME);
 
         Assertions.assertAll(
                 () -> assertTrue(pets.isEmpty(), LIST_NOT_NULL),
-                () -> assertEquals("application/json", contentType, CONTENT_TYPE_WRONG),
                 () -> assertTrue(LocalDateTime.now().isAfter(responseTime), RESPONSE_TIME_WRONG)
         );
     }
@@ -79,12 +77,10 @@ public class FindPetsTest {
     public void findPetByNotExistedStatus(String status) {
         Response response = getPetsResponse();
         List<Pet> pets = getPets(status);
-        String contentType = response.getHeader("Content-Type");
         LocalDateTime responseTime = LocalDateTime.parse(response.getHeader("Date"), DateTimeFormatter.RFC_1123_DATE_TIME);
 
         Assertions.assertAll(
                 () -> assertTrue(pets.isEmpty(), LIST_NOT_NULL),
-                () -> assertEquals("application/json", contentType, CONTENT_TYPE_WRONG),
                 () -> assertTrue(LocalDateTime.now().isAfter(responseTime), RESPONSE_TIME_WRONG)
         );
     }
