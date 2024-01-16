@@ -11,6 +11,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import petstore.models.pets.Pet;
 import petstore.models.pets.PetStatus;
+import petstore.services.PetService;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -21,17 +22,17 @@ import static org.junit.jupiter.api.Assertions.*;
 import static petstore.constants.AssertMessages.*;
 import static petstore.constants.Others.NEGATIVE;
 import static petstore.constants.Others.POSITIVE;
-import static petstore.steps.PetSteps.getPets;
-import static petstore.steps.PetSteps.getPetsResponse;
 
 public class FindPetsTest {
+
+    private final PetService petService = new PetService();
 
     @Test
     @Tag(NEGATIVE)
     @DisplayName("Проверка получения питомцев без статуса")
     public void findPetWithoutStatusFilter() {
-        Response response = getPetsResponse();
-        List<Pet> pets = getPets();
+        Response response = petService.getPetsResponse();
+        List<Pet> pets = petService.getPets();
         LocalDateTime responseTime = LocalDateTime.parse(response.getHeader("Date"), DateTimeFormatter.RFC_1123_DATE_TIME);
 
         Assertions.assertAll(
@@ -45,7 +46,7 @@ public class FindPetsTest {
     @Tag(POSITIVE)
     @DisplayName("Проверка фильтрации питомцев по одному статусу")
     public void findPetByOneStatus(PetStatus status) {
-        List<Pet> pets = getPets(status.name());
+        List<Pet> pets = petService.getPets(status.name());
 
         pets.forEach(pet -> Assertions.assertAll(
                     () -> assertEquals(status, pet.getStatus(), PET_STATUS_WRONG),
@@ -60,7 +61,7 @@ public class FindPetsTest {
     @Tag(POSITIVE)
     @DisplayName("Проверка фильтрации питомцев сразу по нескольким статусам")
     public void findPetBySomeStatuses(String statuses) {
-        List<Pet> pets = getPets(statuses);
+        List<Pet> pets = petService.getPets(statuses);
 
         pets.forEach(pet -> Assertions.assertAll(
                 () -> assertTrue(statuses.contains(pet.getStatus().name()), PET_STATUS_WRONG),
@@ -75,8 +76,8 @@ public class FindPetsTest {
     @Tag(NEGATIVE)
     @DisplayName("Проверка фильтрации питомцев по несуществующим статусам")
     public void findPetByNotExistedStatus(String status) {
-        Response response = getPetsResponse();
-        List<Pet> pets = getPets(status);
+        Response response = petService.getPetsResponse();
+        List<Pet> pets = petService.getPets(status);
         LocalDateTime responseTime = LocalDateTime.parse(response.getHeader("Date"), DateTimeFormatter.RFC_1123_DATE_TIME);
 
         Assertions.assertAll(

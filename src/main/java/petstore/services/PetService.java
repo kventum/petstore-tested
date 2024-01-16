@@ -1,10 +1,8 @@
-package petstore.steps;
+package petstore.services;
 
-import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
-import io.restassured.specification.RequestSpecification;
 import petstore.models.pets.Pet;
 
 import java.util.List;
@@ -14,16 +12,14 @@ import static io.restassured.RestAssured.given;
 import static org.apache.http.HttpStatus.SC_OK;
 import static petstore.constants.Endpoints.*;
 
-public class PetSteps {
-    public static final RequestSpecification REQUEST_SPECIFICATION =
-            new RequestSpecBuilder()
-                    .setBaseUri(BASE_URL)
-                    .setBasePath(PET)
-                    .setContentType(ContentType.JSON)
-                    .addHeader("api_key", "special-key")
-                    .build();
+public class PetService extends BaseService {
 
-    public static Pet createPet(Pet request, int statusCode) {
+    @Override
+    protected String getBasePath() {
+        return PET;
+    }
+
+    public Pet createPet(Pet request, int statusCode) {
         return given()
                 .spec(REQUEST_SPECIFICATION)
                 .body(request)
@@ -35,7 +31,7 @@ public class PetSteps {
                 .extract().as(Pet.class);
     }
 
-    public static Response getPetsResponse() {
+    public Response getPetsResponse() {
         return given()
                 .spec(REQUEST_SPECIFICATION)
                 .log().all()
@@ -46,7 +42,7 @@ public class PetSteps {
                 .extract().response();
     }
 
-    public static List<Pet> getPets() {
+    public List<Pet> getPets() {
         return given()
                 .spec(REQUEST_SPECIFICATION)
                 .when().log().all()
@@ -56,7 +52,7 @@ public class PetSteps {
                 .extract().jsonPath().getList(".", Pet.class);
     }
 
-    public static List<Pet> getPets(String status) {
+    public List<Pet> getPets(String status) {
         return given()
                 .spec(REQUEST_SPECIFICATION)
                 .when().log().all()
@@ -67,7 +63,7 @@ public class PetSteps {
                 .extract().jsonPath().getList(".", Pet.class);
     }
 
-    public static ExtractableResponse<Response> getPetById(Object id, int statusCode) {
+    public ExtractableResponse<Response> getPetById(Object id, int statusCode) {
         return given()
                 .spec(REQUEST_SPECIFICATION)
                 .pathParam("id", id)
@@ -76,5 +72,16 @@ public class PetSteps {
                 .then().log().all()
                 .statusCode(statusCode)
                 .extract();
+    }
+
+    public Response deletePet(Object id, int statusCode) {
+        return given()
+                .spec(REQUEST_SPECIFICATION)
+                .pathParam("id", id)
+                .when().log().all()
+                .delete(PET_BY_ID)
+                .then().log().all()
+                .statusCode(statusCode)
+                .extract().response();
     }
 }

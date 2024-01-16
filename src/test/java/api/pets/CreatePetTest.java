@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import petstore.models.pets.Category;
 import petstore.models.pets.Pet;
 import petstore.models.pets.PetStatus;
+import petstore.services.PetService;
 
 import java.util.List;
 
@@ -16,10 +17,10 @@ import static org.junit.jupiter.api.Assertions.*;
 import static petstore.constants.AssertMessages.*;
 import static petstore.constants.Others.NEGATIVE;
 import static petstore.constants.Others.POSITIVE;
-import static petstore.steps.PetSteps.REQUEST_SPECIFICATION;
-import static petstore.steps.PetSteps.createPet;
 
 public class CreatePetTest {
+
+    private final PetService petService = new PetService();
 
     @Test
     @Tag(POSITIVE)
@@ -38,7 +39,7 @@ public class CreatePetTest {
                 .status(PetStatus.pending)
                 .build();
 
-        Pet response = createPet(request, SC_OK);
+        Pet response = petService.createPet(request, SC_OK);
 
         assertAll(
                 () -> assertNotNull(response.getId(), PET_ID_NULL),
@@ -63,7 +64,7 @@ public class CreatePetTest {
                 .photoUrls(new String[]{photoUrl})
                 .build();
 
-        Pet response = createPet(request, SC_OK);
+        Pet response = petService.createPet(request, SC_OK);
         assertAll(
                 () -> assertEquals(petName, response.getName(), PET_NAME_WRONG),
                 () -> assertEquals(photoUrl, response.getPhotoUrls()[0], PET_PHOTO_URL_WRONG),
@@ -83,7 +84,7 @@ public class CreatePetTest {
                 .photoUrls(new String[]{photoUrl})
                 .build();
 
-        Pet response = createPet(request, SC_METHOD_NOT_ALLOWED);
+        Pet response = petService.createPet(request, SC_METHOD_NOT_ALLOWED);
         assertAll(
                 () -> assertNull(response.getName(), "Pet name is not null"),
                 () -> assertEquals(photoUrl, response.getPhotoUrls()[0], PET_PHOTO_URL_WRONG),
@@ -103,7 +104,7 @@ public class CreatePetTest {
                 .name(petName)
                 .build();
 
-        Pet response = createPet(request, SC_METHOD_NOT_ALLOWED);
+        Pet response = petService.createPet(request, SC_METHOD_NOT_ALLOWED);
         assertAll(
                 () -> assertEquals(petName, response.getName(), PET_NAME_WRONG),
                 () -> assertNull(response.getPhotoUrls(), "Pet has photo urls"),
@@ -126,7 +127,7 @@ public class CreatePetTest {
                 .build();
 
         given()
-                .spec(REQUEST_SPECIFICATION)
+                .spec(petService.REQUEST_SPECIFICATION)
                 .body(request)
                 .when().log().all()
                 .get()
