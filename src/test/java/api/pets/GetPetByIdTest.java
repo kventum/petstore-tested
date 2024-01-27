@@ -3,7 +3,7 @@ package api.pets;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import petstore.models.ErrorBody;
+import petstore.models.ApiResponse;
 import petstore.models.pets.Pet;
 import petstore.services.PetService;
 
@@ -36,7 +36,7 @@ public class GetPetByIdTest {
     public void getPetByUnexistedId() {
         long id = 1024;
 
-        ErrorBody response = petService.getPetById(id, SC_NOT_FOUND).as(ErrorBody.class);
+        ApiResponse response = petService.getPetById(id, SC_NOT_FOUND).as(ApiResponse.class);
 
         assertAll(
                 () -> assertEquals(1, response.getCode()),
@@ -51,7 +51,7 @@ public class GetPetByIdTest {
     public void getPetByStringId() {
         String id = "i";
 
-        ErrorBody response = petService.getPetById(id, SC_NOT_FOUND).as(ErrorBody.class);
+        ApiResponse response = petService.getPetById(id, SC_NOT_FOUND).as(ApiResponse.class);
 
         assertAll(
                 () -> assertEquals(SC_NOT_FOUND, response.getCode()),

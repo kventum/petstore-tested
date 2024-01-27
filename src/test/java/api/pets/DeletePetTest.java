@@ -2,7 +2,7 @@ package api.pets;
 
 import io.restassured.response.Response;
 import org.junit.jupiter.api.*;
-import petstore.models.ErrorBody;
+import petstore.models.ApiResponse;
 import petstore.models.pets.Pet;
 import petstore.services.PetService;
 
@@ -34,7 +34,7 @@ public class DeletePetTest {
     @DisplayName("Удаление существующего питомца")
     public void deleteExistedPet() {
         Response response = petService.deletePet(id, SC_OK);
-        ErrorBody body = response.as(ErrorBody.class);
+        ApiResponse body = response.as(ApiResponse.class);
         LocalDateTime responseTime = LocalDateTime.parse(response.getHeader("Date"), DateTimeFormatter.RFC_1123_DATE_TIME);
 
         assertAll(
@@ -70,7 +70,7 @@ public class DeletePetTest {
         String id = "a";
 
         Response response = petService.deletePet(id, SC_NOT_FOUND);
-        ErrorBody body = response.as(ErrorBody.class);
+        ApiResponse body = response.as(ApiResponse.class);
         LocalDateTime responseTime = LocalDateTime.parse(response.getHeader("Date"), DateTimeFormatter.RFC_1123_DATE_TIME);
 
         assertAll(

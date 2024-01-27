@@ -27,7 +27,7 @@ public class PetService extends BaseService {
                 .post()
                 .then().log().all()
                 .statusCode(statusCode)
-                .header("Content-Type", ContentType.JSON.toString())
+                .contentType(ContentType.JSON)
                 .extract().as(Pet.class);
     }
 
@@ -72,6 +72,18 @@ public class PetService extends BaseService {
                 .then().log().all()
                 .statusCode(statusCode)
                 .extract();
+    }
+
+    public Pet updatePet(Pet request, int statusCode) {
+        return given()
+                .spec(REQUEST_SPECIFICATION)
+                .body(request)
+                .when().log().all()
+                .put()
+                .then().log().all()
+                .contentType(ContentType.JSON)
+                .statusCode(statusCode)
+                .extract().as(Pet.class);
     }
 
     public Response deletePet(Object id, int statusCode) {

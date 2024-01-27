@@ -26,4 +26,29 @@ public class DataGenerator {
                 .photoUrls(new String[]{photoUrl})
                 .build();
     }
+
+    public static Pet getPet(Long id, String name, Long categoryId, String categoryName, String photoUrl,Long tagId, String tagName, PetStatus status) {
+        return Pet.builder()
+                .id(id)
+                .category(new Category(categoryName, categoryId))
+                .name(name)
+                .photoUrls(new String[]{photoUrl})
+                .tags(List.of(new Category(tagName, tagId)))
+                .status(status)
+                .build();
+    }
+
+    public static Pet getPet(Long id, String name, String photoUrl) {
+        return Pet.builder()
+                .id(id)
+                .name(name)
+                .photoUrls(new String[]{photoUrl})
+                .build();
+    }
+
+    public static Pet getPet(Long id) {
+        return Pet.builder()
+                .id(id)
+                .build();
+    }
 }
