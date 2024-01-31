@@ -1,8 +1,7 @@
 package api.pets;
 
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
+import api.BaseTest;
+import org.junit.jupiter.api.*;
 import petstore.models.ApiResponse;
 import petstore.models.pets.Pet;
 import petstore.services.PetService;
@@ -12,17 +11,28 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static petstore.constants.Others.NEGATIVE;
 import static petstore.constants.Others.POSITIVE;
+import static petstore.util.DataGenerator.getPet;
 
-public class GetPetByIdTest {
+public class GetPetByIdTest extends BaseTest {
 
     private final PetService petService = new PetService();
+    long id;
+
+    @BeforeAll
+    public void prepare() {
+        Pet pet = petService.createPet(getPet("Korshik", "-"), SC_OK);
+        id = pet.getId();
+    }
+
+    @AfterAll
+    public void clear() {
+        petService.deletePet(id, SC_OK);
+    }
 
     @Test
     @Tag(POSITIVE)
     @DisplayName("Получение питомца по id")
     public void getExistedPetById() {
-        long id = 12;
-
         Pet pet = petService.getPetById(id, SC_OK).as(Pet.class);
 
         assertAll(

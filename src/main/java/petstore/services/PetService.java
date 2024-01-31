@@ -1,10 +1,13 @@
 package petstore.services;
 
+import io.restassured.builder.MultiPartSpecBuilder;
 import io.restassured.http.ContentType;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
 import petstore.models.pets.Pet;
+import petstore.util.FileProvider;
 
+import java.io.File;
 import java.util.List;
 import java.util.Map;
 
@@ -92,6 +95,42 @@ public class PetService extends BaseService {
                 .pathParam("id", id)
                 .when().log().all()
                 .delete(PET_BY_ID)
+                .then().log().all()
+                .statusCode(statusCode)
+                .extract().response();
+    }
+
+    public Response uploadImage(Long id, String metadata, String fileName, int statusCode) {
+        return given()
+                .spec(REQUEST_SPECIFICATION.contentType(ContentType.MULTIPART))
+                .pathParam("id", id)
+                .multiPart("additionalMetadata", metadata)
+                .multiPart("file", FileProvider.getFile(fileName))
+                .when().log().all()
+                .post(UPLOAD_PET_IMAGE)
+                .then().log().all()
+                .statusCode(statusCode)
+                .extract().response();
+    }
+
+    public Response uploadImage(Long id, String fileName, int statusCode) {
+        return given()
+                .spec(REQUEST_SPECIFICATION.contentType(ContentType.MULTIPART))
+                .pathParam("id", id)
+                .multiPart("file", FileProvider.getFile(fileName))
+                .when().log().all()
+                .post(UPLOAD_PET_IMAGE)
+                .then().log().all()
+                .statusCode(statusCode)
+                .extract().response();
+    }
+
+    public Response uploadImage(Long id, int statusCode) {
+        return given()
+                .spec(REQUEST_SPECIFICATION.contentType(ContentType.MULTIPART))
+                .pathParam("id", id)
+                .when().log().all()
+                .post(UPLOAD_PET_IMAGE)
                 .then().log().all()
                 .statusCode(statusCode)
                 .extract().response();

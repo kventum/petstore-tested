@@ -1,5 +1,6 @@
 package api.pets;
 
+import api.BaseTest;
 import org.junit.jupiter.api.*;
 import petstore.models.pets.Pet;
 import petstore.models.pets.PetStatus;
@@ -13,16 +14,15 @@ import static petstore.constants.Others.NEGATIVE;
 import static petstore.constants.Others.POSITIVE;
 import static petstore.util.DataGenerator.getPet;
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class UpdatePetTest {
+public class UpdatePetTest extends BaseTest {
 
-    private final PetService petService = new PetService();
+    PetService petService = new PetService();
     private long id;
     private long categoryId;
     private long tagId;
 
     @BeforeAll
-    public void preparePet() {
+    public void prepare() {
         Pet pet = petService.createPet(getPet("Nach", "kots", "", "kotik", PetStatus.pending),
                 SC_OK);
         id = pet.getId();
@@ -31,7 +31,7 @@ public class UpdatePetTest {
     }
 
     @AfterAll
-    public void clearing() {
+    public void clear() {
         petService.deletePet(id, SC_OK);
     }
 
