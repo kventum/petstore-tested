@@ -1,0 +1,11 @@
+Adam Janiak, Radosław Rudek,
+A new approach to the learning effect: Beyond the learning curve restrictions,
+Computers & Operations Research,
+Volume 35, Issue 11,
+2008,
+Pages 3727-3736,
+ISSN 0305-0548,
+https://doi.org/10.1016/j.cor.2007.04.007.
+(https://www.sciencedirect.com/science/article/pii/S0305054807000986)
+Abstract: In this paper, we bring into the scheduling field a new model of the learning effect, where in two ways the existing approach is generalized. First we relax one of the rigorous constraints, and thus in our model each job can provide different experience to the processor. Second we formulate the job processing time as a non-increasing k-stepwise function, that, in general, is not restricted to a certain learning curve, thereby it can accurately fit every possible shape of a learning function. Furthermore, we prove that the problem of makespan minimization with the considered model is polynomially solvable if every job provides the same experience to the processor, and it becomes NP-hard if the experiences are diversified. The most essential result is a pseudopolynomial time algorithm that solves optimally the makespan minimization problem with any function of an experience-based learning model reduced into the form of the k-stepwise function.
+Keywords: Scheduling; Learning effect; Single machine; Computational complexity; Dynamic programming

@@ -72,7 +72,7 @@ public class PetSteps {
                 .spec(REQUEST_SPECIFICATION)
                 .pathParam("id", id)
                 .when().log().all()
-                .get(GET_PET_BY_ID)
+                .get(PET_BY_ID)
                 .then().log().all()
                 .statusCode(statusCode)
                 .extract();
