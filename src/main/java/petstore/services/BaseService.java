@@ -4,12 +4,9 @@ import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.filter.log.LogDetail;
 import io.restassured.http.ContentType;
-import io.restassured.response.Response;
-import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
 
-import static org.apache.http.HttpStatus.SC_OK;
 import static petstore.constants.Endpoints.BASE_URL;
 
 public abstract class BaseService {
@@ -24,8 +21,18 @@ public abstract class BaseService {
                     .addHeader("api_key", "special-key")
                     .build();
 
-    public static ResponseSpecification responseSpecOk = new ResponseSpecBuilder()
-            .expectStatusCode(SC_OK)
-            .log(LogDetail.ALL)
-            .build();
+    public static ResponseSpecification responseSpec(int statusCode) {
+        return new ResponseSpecBuilder()
+                .expectStatusCode(statusCode)
+                .log(LogDetail.ALL)
+                .build();
+    }
+
+    public static ResponseSpecification responseSpec(int statusCode, ContentType contentType) {
+        return new ResponseSpecBuilder()
+                .expectStatusCode(statusCode)
+                .expectContentType(contentType)
+                .log(LogDetail.ALL)
+                .build();
+    }
 }
