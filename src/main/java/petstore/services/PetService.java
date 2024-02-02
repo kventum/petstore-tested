@@ -20,65 +20,42 @@ public class PetService extends BaseService {
     }
 
     public Pet createPet(Pet request, int statusCode) {
-        return given()
-                .spec(REQUEST_SPECIFICATION)
-                .body(request)
-                .when().log().all()
-                .post()
+        return post(EMPTY, request)
                 .then()
                 .spec(responseSpec(statusCode, ContentType.JSON))
                 .extract().as(Pet.class);
     }
 
     public Response getPets(int statusCode) {
-        return given()
-                .spec(REQUEST_SPECIFICATION)
-                .log().all()
-                .get(FIND_BY_STATUS_EP)
+        return get(FIND_BY_STATUS_EP)
                 .then()
                 .spec(responseSpec(statusCode, ContentType.JSON))
                 .extract().response();
     }
 
     public List<Pet> getPets(String status, int statusCode) {
-        return given()
-                .spec(REQUEST_SPECIFICATION)
-                .when().log().all()
-                .queryParams(Map.of("status", status))
-                .get(FIND_BY_STATUS_EP)
+        return get(FIND_BY_STATUS_EP, Map.of("status", status))
                 .then()
                 .spec(responseSpec(statusCode))
                 .extract().jsonPath().getList(".", Pet.class);
     }
 
     public ExtractableResponse<Response> getPetById(Object id, int statusCode) {
-        return given()
-                .spec(REQUEST_SPECIFICATION)
-                .pathParam("id", id)
-                .when().log().all()
-                .get(PET_BY_ID)
+        return get(PET_BY_ID, "id", id)
                 .then()
                 .spec(responseSpec(statusCode))
                 .extract();
     }
 
     public Pet updatePet(Pet request, int statusCode) {
-        return given()
-                .spec(REQUEST_SPECIFICATION)
-                .body(request)
-                .when().log().all()
-                .put()
+        return put(EMPTY, request)
                 .then()
                 .spec(responseSpec(statusCode, ContentType.JSON))
                 .extract().as(Pet.class);
     }
 
     public Response deletePet(Object id, int statusCode) {
-        return given()
-                .spec(REQUEST_SPECIFICATION)
-                .pathParam("id", id)
-                .when().log().all()
-                .delete(PET_BY_ID)
+        return delete(PET_BY_ID, "id", id)
                 .then()
                 .spec(responseSpec(statusCode))
                 .extract().response();
@@ -93,7 +70,7 @@ public class PetService extends BaseService {
                 .when().log().all()
                 .post(UPLOAD_PET_IMAGE)
                 .then()
-                .spec(responseSpec(statusCode))
+                .spec(responseSpec(statusCode, ContentType.JSON))
                 .extract().response();
     }
 
@@ -105,7 +82,7 @@ public class PetService extends BaseService {
                 .when().log().all()
                 .post(UPLOAD_PET_IMAGE)
                 .then()
-                .spec(responseSpec(statusCode))
+                .spec(responseSpec(statusCode, ContentType.JSON))
                 .extract().response();
     }
 
@@ -116,7 +93,7 @@ public class PetService extends BaseService {
                 .when().log().all()
                 .post(UPLOAD_PET_IMAGE)
                 .then()
-                .spec(responseSpec(statusCode))
+                .spec(responseSpec(statusCode, ContentType.JSON))
                 .extract().response();
     }
 }
