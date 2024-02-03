@@ -1,5 +1,7 @@
 package api.pets;
 
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -24,6 +26,7 @@ import static petstore.constants.AssertMessages.*;
 import static petstore.constants.Others.NEGATIVE;
 import static petstore.constants.Others.POSITIVE;
 
+@DisplayName("Тесты на поиск питомцев по статусу")
 public class FindPetsTest {
 
     private final PetService petService = new PetService();
@@ -45,6 +48,7 @@ public class FindPetsTest {
     @ParameterizedTest
     @EnumSource(PetStatus.class)
     @Tag(POSITIVE)
+    @Severity(SeverityLevel.BLOCKER)
     @DisplayName("Проверка фильтрации питомцев по одному статусу")
     public void findPetByOneStatus(PetStatus status) {
         List<Pet> pets = petService.getPets(status.name(), SC_OK);
@@ -60,6 +64,7 @@ public class FindPetsTest {
     @ParameterizedTest
     @MethodSource("statusCombinations")
     @Tag(POSITIVE)
+    @Severity(SeverityLevel.CRITICAL)
     @DisplayName("Проверка фильтрации питомцев сразу по нескольким статусам")
     public void findPetBySomeStatuses(String statuses) {
         List<Pet> pets = petService.getPets(statuses, SC_OK);

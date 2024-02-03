@@ -1,6 +1,8 @@
 package api.pets;
 
 import api.BaseTest;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.*;
 import petstore.models.ApiResponse;
@@ -18,6 +20,7 @@ import static petstore.constants.Others.NEGATIVE;
 import static petstore.constants.Others.POSITIVE;
 import static petstore.util.DataGenerator.getPet;
 
+@DisplayName("Тесты на удаление питомца")
 public class DeletePetTest extends BaseTest {
 
     private static final String ZERO_CONTENT = "0";
@@ -32,6 +35,7 @@ public class DeletePetTest extends BaseTest {
 
     @Test
     @Tag(POSITIVE)
+    @Severity(SeverityLevel.CRITICAL)
     @DisplayName("Удаление существующего питомца")
     public void deleteExistedPet() {
         Response response = petService.deletePet(id, SC_OK);

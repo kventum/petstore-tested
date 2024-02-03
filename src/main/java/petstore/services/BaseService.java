@@ -1,5 +1,6 @@
 package petstore.services;
 
+import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.filter.log.LogDetail;
@@ -23,6 +24,7 @@ public abstract class BaseService {
                     .setBaseUri(BASE_URL)
                     .setBasePath(getBasePath())
                     .setContentType(ContentType.JSON)
+                    .addFilter(new AllureRestAssured())
                     .addHeader("api_key", "special-key")
                     .build();
 
