@@ -1,6 +1,8 @@
 package api.pets;
 
 import api.BaseTest;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -21,6 +23,7 @@ import static petstore.constants.AssertMessages.*;
 import static petstore.constants.Others.NEGATIVE;
 import static petstore.constants.Others.POSITIVE;
 
+@DisplayName("Тесты на создание питомца")
 public class CreatePetTest extends BaseTest {
 
     private final PetService petService = new PetService();
@@ -35,6 +38,7 @@ public class CreatePetTest extends BaseTest {
 
     @Test
     @Tag(POSITIVE)
+    @Severity(SeverityLevel.BLOCKER)
     @DisplayName("Создание питомца со всеми валидными полями")
     public void createValidPet() {
         String petName = "Cracker";
@@ -68,6 +72,7 @@ public class CreatePetTest extends BaseTest {
 
     @Test
     @Tag(POSITIVE)
+    @Severity(SeverityLevel.BLOCKER)
     @DisplayName("Создание питомца только с обязательными полями")
     public void createPetWithRequiredFields() {
         String petName = "Requi";
@@ -93,6 +98,7 @@ public class CreatePetTest extends BaseTest {
 
     @Test
     @Tag(NEGATIVE)
+    @Severity(SeverityLevel.CRITICAL)
     @DisplayName("Создание питомца без имени")
     public void createPetWithoutName() {
         String photoUrl = "https://www.mybestfrienddogcare.co.uk/wp-content/uploads/2020/09/Doggy-Day-Care-in-Andover-.jpg";
@@ -114,6 +120,7 @@ public class CreatePetTest extends BaseTest {
 
     @Test
     @Tag(NEGATIVE)
+    @Severity(SeverityLevel.CRITICAL)
     @DisplayName("Создание питомца без фото")
     public void createPetWithoutPhotoUrls() {
         String petName = "Garfield";
@@ -135,6 +142,7 @@ public class CreatePetTest extends BaseTest {
 
     @Test
     @Tag(NEGATIVE)
+    @Severity(SeverityLevel.MINOR)
     @DisplayName("Создание питомца методом GET")
     public void createPetByGetRequest() {
         String petName = "Ceprany";

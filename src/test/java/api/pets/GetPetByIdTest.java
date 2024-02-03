@@ -1,6 +1,8 @@
 package api.pets;
 
 import api.BaseTest;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import org.junit.jupiter.api.*;
 import petstore.models.ApiResponse;
 import petstore.models.pets.Pet;
@@ -13,6 +15,7 @@ import static petstore.constants.Others.NEGATIVE;
 import static petstore.constants.Others.POSITIVE;
 import static petstore.util.DataGenerator.getPet;
 
+@DisplayName("Тесты на получение питомца по ID")
 public class GetPetByIdTest extends BaseTest {
 
     private final PetService petService = new PetService();
@@ -31,6 +34,7 @@ public class GetPetByIdTest extends BaseTest {
 
     @Test
     @Tag(POSITIVE)
+    @Severity(SeverityLevel.BLOCKER)
     @DisplayName("Получение питомца по id")
     public void getExistedPetById() {
         Pet pet = petService.getPetById(id, SC_OK).as(Pet.class);
@@ -42,6 +46,7 @@ public class GetPetByIdTest extends BaseTest {
 
     @Test
     @Tag(NEGATIVE)
+    @Severity(SeverityLevel.CRITICAL)
     @DisplayName("Получение несуществующего питомца по id")
     public void getPetByUnexistedId() {
         long id = 1024;
@@ -57,6 +62,7 @@ public class GetPetByIdTest extends BaseTest {
 
     @Test
     @Tag(NEGATIVE)
+    @Severity(SeverityLevel.MINOR)
     @DisplayName("Получение питомца по невалидному id")
     public void getPetByStringId() {
         String id = "i";

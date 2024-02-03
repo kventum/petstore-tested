@@ -1,6 +1,8 @@
 package api.pets;
 
 import api.BaseTest;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.*;
 import petstore.models.ApiResponse;
@@ -17,6 +19,7 @@ import static petstore.constants.AssertMessages.*;
 import static petstore.constants.Others.*;
 import static petstore.util.DataGenerator.getPet;
 
+@DisplayName("Тесты на загрузку изображения питомца")
 public class UploadPetImageTest extends BaseTest {
 
     private final PetService petService = new PetService();
@@ -39,6 +42,7 @@ public class UploadPetImageTest extends BaseTest {
 
     @Test
     @Tag(POSITIVE)
+    @Severity(SeverityLevel.CRITICAL)
     @DisplayName("Загрузка валидного изображения питомца")
     public void uploadValidImage() {
         String metadata = "formData";
@@ -58,6 +62,7 @@ public class UploadPetImageTest extends BaseTest {
 
     @Test
     @Tag(POSITIVE)
+    @Severity(SeverityLevel.CRITICAL)
     @DisplayName("Загрузка валидного изображения питомца без опционального параметра")
     public void uploadValidImageWithoutAdditionalMetadata() {
         String message = "additionalMetadata: null\nFile uploaded to ./" +

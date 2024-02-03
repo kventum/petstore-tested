@@ -1,6 +1,8 @@
 package api.pets;
 
 import api.BaseTest;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import org.junit.jupiter.api.*;
 import petstore.models.pets.Pet;
 import petstore.models.pets.PetStatus;
@@ -14,6 +16,7 @@ import static petstore.constants.Others.NEGATIVE;
 import static petstore.constants.Others.POSITIVE;
 import static petstore.util.DataGenerator.getPet;
 
+@DisplayName("Тесты на обновление существующего питомца")
 public class UpdatePetTest extends BaseTest {
 
     PetService petService = new PetService();
@@ -37,6 +40,7 @@ public class UpdatePetTest extends BaseTest {
 
     @Test
     @Tag(POSITIVE)
+    @Severity(SeverityLevel.CRITICAL)
     @DisplayName("Обновление всех полей питомца")
     public void updateAllPetFields() {
         String name = "Nachos";
