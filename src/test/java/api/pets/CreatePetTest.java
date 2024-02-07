@@ -27,7 +27,7 @@ import static petstore.constants.Others.POSITIVE;
 public class CreatePetTest extends BaseTest {
 
     private final PetService petService = new PetService();
-    private List<Pet> petList = new ArrayList<>();
+    private final List<Pet> petList = new ArrayList<>();
 
     public void prepare() {}
 

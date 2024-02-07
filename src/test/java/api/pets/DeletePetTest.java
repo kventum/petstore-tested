@@ -16,8 +16,7 @@ import static org.apache.http.HttpStatus.SC_NOT_FOUND;
 import static org.apache.http.HttpStatus.SC_OK;
 import static org.junit.jupiter.api.Assertions.*;
 import static petstore.constants.AssertMessages.*;
-import static petstore.constants.Others.NEGATIVE;
-import static petstore.constants.Others.POSITIVE;
+import static petstore.constants.Others.*;
 import static petstore.util.DataGenerator.getPet;
 
 @DisplayName("Тесты на удаление питомца")
@@ -37,14 +36,14 @@ public class DeletePetTest extends BaseTest {
     @Tag(POSITIVE)
     @Severity(SeverityLevel.CRITICAL)
     @DisplayName("Удаление существующего питомца")
-    public void deleteExistedPet() {
+    public void deleteExistingPet() {
         Response response = petService.deletePet(id, SC_OK);
         ApiResponse body = response.as(ApiResponse.class);
         LocalDateTime responseTime = LocalDateTime.parse(response.getHeader("Date"), DateTimeFormatter.RFC_1123_DATE_TIME);
 
         assertAll(
                 () -> assertEquals(SC_OK, body.getCode(), RESPONSE_CODE_WRONG),
-                () -> assertEquals("unknown", body.getType(), RESPONSE_TYPE_WRONG),
+                () -> assertEquals(UNKNOWN_TYPE, body.getType(), RESPONSE_TYPE_WRONG),
                 () -> assertEquals(id.toString(), body.getMessage(), RESPONSE_MESSAGE_WRONG),
                 () -> assertTrue(LocalDateTime.now().isAfter(responseTime), RESPONSE_TIME_WRONG)
         );
@@ -55,7 +54,7 @@ public class DeletePetTest extends BaseTest {
     @Test
     @Tag(NEGATIVE)
     @DisplayName("Удаление несуществующего питомца")
-    public void deleteUnexistedPet() {
+    public void deleteNonexistentPet() {
         long id = 1212;
 
         Response response = petService.deletePet(id, SC_NOT_FOUND);
@@ -70,7 +69,8 @@ public class DeletePetTest extends BaseTest {
 
     @Test
     @Tag(NEGATIVE)
-    @DisplayName("Удаление питомца с невалидным id")
+    @Severity(SeverityLevel.MINOR)
+    @DisplayName("Удаление питомца с невалидным буквенным id")
     public void deletePetByStringId() {
         String id = "a";
 
@@ -81,7 +81,7 @@ public class DeletePetTest extends BaseTest {
         assertAll(
                 () -> assertTrue(LocalDateTime.now().isAfter(responseTime), RESPONSE_TIME_WRONG),
                 () -> assertEquals(SC_NOT_FOUND, body.getCode(), RESPONSE_CODE_WRONG),
-                () -> assertEquals("unknown", body.getType(), RESPONSE_TYPE_WRONG),
+                () -> assertEquals(UNKNOWN_TYPE, body.getType(), RESPONSE_TYPE_WRONG),
                 () -> assertEquals("java.lang.NumberFormatException: For input string: \""+ id + "\"",
                         body.getMessage(),RESPONSE_MESSAGE_WRONG)
         );
