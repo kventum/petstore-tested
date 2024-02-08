@@ -2,6 +2,7 @@ package petstore.constants;
 
 public class AssertMessages {
     public static final String PET_ID_NULL = "Pet id is null";
+    public static final String PET_ID_WRONG = "Pet has wrong id";
     public static final String PET_CATEGORY_NAME_WRONG = "Pet's category name is wrong";
     public static final String PET_CATEGORY_ID_NULL = "Pet CategoryId is null";
     public static final String PET_NAME_WRONG = "Pet name is wrong";
@@ -19,4 +20,10 @@ public class AssertMessages {
     public static final String RESPONSE_CODE_WRONG = "Response code is wrong";
     public static final String RESPONSE_TYPE_WRONG = "Response type is wrong";
     public static final String RESPONSE_MESSAGE_WRONG = "Response message is wrong";
+    public static final String ORDER_ID_ZERO = "Order id is 0 (by default)";
+    public static final String ORDER_ID_WRONG = "Order has wrong id";
+    public static final String ORDER_QUANTITY_WRONG = "Order quantity is wrong";
+    public static final String ORDER_DATE_WRONG = "Order ship date is wrong";
+    public static final String ORDER_STATUS_WRONG = "Order has  wrong status";
+    public static final String ORDER_COMPLETE_WRONG = "Order completion is wrong";
 }
