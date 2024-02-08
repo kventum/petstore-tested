@@ -21,6 +21,7 @@ public class AssertMessages {
     public static final String RESPONSE_TYPE_WRONG = "Response type is wrong";
     public static final String RESPONSE_MESSAGE_WRONG = "Response message is wrong";
     public static final String ORDER_ID_ZERO = "Order id is 0 (by default)";
+    public static final String ORDER_ID_WRONG = "Order has wrong id";
     public static final String ORDER_QUANTITY_WRONG = "Order quantity is wrong";
     public static final String ORDER_DATE_WRONG = "Order ship date is wrong";
     public static final String ORDER_STATUS_WRONG = "Order has  wrong status";

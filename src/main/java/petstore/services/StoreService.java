@@ -23,7 +23,14 @@ public class StoreService extends BaseService{
     public Response deleteOrder(Object id, int statusCode) {
         return delete(ORDER_BY_ID, "id", id)
                 .then()
-                .spec(responseSpec(statusCode))
+                .spec(responseSpec(statusCode, ContentType.JSON))
+                .extract().response();
+    }
+
+    public Response getOrder(Object id, int statusCode) {
+        return get(ORDER_BY_ID, "id", id)
+                .then()
+                .spec(responseSpec(statusCode, ContentType.JSON))
                 .extract().response();
     }
 }
