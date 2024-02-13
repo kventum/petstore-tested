@@ -11,4 +11,5 @@ public class Endpoints {
     public static final String STORE = "v2/store";
     public static final String ORDER = "/order";
     public static final String ORDER_BY_ID = "/order/{id}";
+    public static final String INVENTORY = "/inventory";
 }
