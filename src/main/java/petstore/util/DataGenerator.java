@@ -2,12 +2,17 @@ package petstore.util;
 
 import petstore.models.Order;
 import petstore.models.OrderStatus;
+import petstore.models.User;
 import petstore.models.pets.Category;
 import petstore.models.pets.Pet;
 import petstore.models.pets.PetStatus;
 
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
 import java.util.List;
+
+import static org.apache.commons.lang3.RandomStringUtils.random;
+import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 
 public class DataGenerator {
 
@@ -81,5 +86,53 @@ public class DataGenerator {
                 .status(status)
                 .complete(complete)
                 .build();
+    }
+
+    public static User getUser(int length, int status) {
+        return User.builder()
+                .id((long) (Math.random() * 10000))
+                .username(random(length, true, true))
+                .firstName(randomAlphabetic(4, 8))
+                .lastName(randomAlphabetic(4, 8))
+                .email(randomAlphabetic(6, 10) + "@" + randomAlphabetic(2, 5) + ".com")
+                .password(random(8, true, true))
+                .phone("+" + random(11, false, true))
+                .userStatus(status)
+                .build();
+    }
+
+    public static User getUser(int usernameLength, int firstNameLength, int lastNameLength, int phoneLength, int status) {
+        return User.builder()
+                .id((long) (Math.random() * 10000))
+                .username(random(usernameLength, true, true))
+                .firstName(randomAlphabetic(firstNameLength))
+                .lastName(randomAlphabetic(lastNameLength))
+                .email(randomAlphabetic(6, 10) + "@" + randomAlphabetic(2, 5) + ".com")
+                .password(random(8, true, true))
+                .phone(random(phoneLength, false, true))
+                .userStatus(status)
+                .build();
+    }
+
+    public static User getUser(String username, String firstName, String lastName, String email, String password,
+                               String phone, int status) {
+        return User.builder()
+                .id((long) (Math.random() * 10000))
+                .username(username)
+                .firstName(firstName)
+                .lastName(lastName)
+                .email(email)
+                .password(password)
+                .phone(phone)
+                .userStatus(status)
+                .build();
+    }
+
+    public static List<User> getUsers(int number) {
+        List<User> users = new ArrayList<>();
+        for (int i = 0; i < number; i++) {
+            users.add(getUser(6, 0));
+        }
+        return users;
     }
 }

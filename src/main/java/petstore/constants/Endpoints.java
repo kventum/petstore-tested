@@ -12,4 +12,9 @@ public class Endpoints {
     public static final String ORDER = "/order";
     public static final String ORDER_BY_ID = "/order/{id}";
     public static final String INVENTORY = "/inventory";
+
+    public static final String USER = "/v2/user";
+    public static final String CREATE_WITH_ARRAY = "/createWithArray";
+    public static final String CREATE_WITH_LIST = "/createWithList";
+    public static final String USER_BY_NAME = "/{username}";
 }
