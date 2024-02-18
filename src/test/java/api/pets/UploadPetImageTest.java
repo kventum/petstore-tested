@@ -24,8 +24,8 @@ public class UploadPetImageTest extends BaseTest {
 
     private final PetService petService = new PetService();
     private long id;
-    private static final String IMG_NAME = "taxa.jpeg";
-    private static final String TXT_NAME = "S0305054807000986.txt";
+    private static final String IMG_NAME = "pets/taxa.jpeg";
+    private static final String TXT_NAME = "pets/S0305054807000986.txt";
     private static final long IMG_SIZE = FileProvider.getFile(IMG_NAME).length();
 
     @BeforeAll

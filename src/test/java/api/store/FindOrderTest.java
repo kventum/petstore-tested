@@ -23,7 +23,7 @@ import static petstore.util.DataGenerator.getOrder;
 import static petstore.util.DataGenerator.getPet;
 
 @DisplayName("Тесты на получение заказа по id")
-public class FindOrder extends BaseTest {
+public class FindOrderTest extends BaseTest {
 
     private static final int quantity = 10;
     private final StoreService storeService = new StoreService();

@@ -49,7 +49,7 @@ public class PlaceOrderTest extends BaseTest {
     }
 
     @ParameterizedTest
-    @CsvFileSource(delimiter =';', resources = "/createOrderWithAllFields.csv", numLinesToSkip = 1)
+    @CsvFileSource(delimiter =';', resources = "/store/createOrderWithAllFields.csv", numLinesToSkip = 1)
     @Tag(POSITIVE)
     @Severity(SeverityLevel.BLOCKER)
     @DisplayName("Тест на размещение заказа со всеми валидными полями")
