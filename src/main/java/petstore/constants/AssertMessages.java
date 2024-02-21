@@ -24,6 +24,14 @@ public class AssertMessages {
     public static final String ORDER_ID_WRONG = "Order has wrong id";
     public static final String ORDER_QUANTITY_WRONG = "Order quantity is wrong";
     public static final String ORDER_DATE_WRONG = "Order ship date is wrong";
-    public static final String ORDER_STATUS_WRONG = "Order has  wrong status";
+    public static final String ORDER_STATUS_WRONG = "Order has wrong status";
     public static final String ORDER_COMPLETE_WRONG = "Order completion is wrong";
+    public static final String USER_ID_WRONG = "User has wrong id";
+    public static final String USERNAME_WRONG = "User has wrong username";
+    public static final String USER_FIRST_NAME_WRONG = "User has wrong first name";
+    public static final String USER_LAST_NAME_WRONG = "User has wrong last name";
+    public static final String USER_EMAIL_WRONG = "User has wrong email";
+    public static final String USER_PASSWORD_WRONG = "User has wrong password";
+    public static final String USER_PHONE_WRONG = "User has wrong phone";
+    public static final String USER_STATUS_WRONG = "User's status is wrong";
 }

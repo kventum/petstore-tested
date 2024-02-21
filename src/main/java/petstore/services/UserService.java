@@ -35,4 +35,18 @@ public class UserService extends BaseService{
                 .spec(responseSpec(statusCode, ContentType.JSON))
                 .extract().response();
     }
+
+    public Response getUser(String username, int statusCode) {
+        return get(USER_BY_NAME, "username", username)
+                .then()
+                .spec(responseSpec(statusCode))
+                .extract().response();
+    }
+
+    public Response getUser(String username, int statusCode, ContentType contentType) {
+        return get(USER_BY_NAME, "username", username)
+                .then()
+                .spec(responseSpec(statusCode, contentType))
+                .extract().response();
+    }
 }
