@@ -5,6 +5,7 @@ import io.restassured.response.Response;
 import petstore.models.User;
 
 import java.util.List;
+import java.util.Map;
 
 import static petstore.constants.Endpoints.*;
 
@@ -47,6 +48,21 @@ public class UserService extends BaseService{
         return get(USER_BY_NAME, "username", username)
                 .then()
                 .spec(responseSpec(statusCode, contentType))
+                .extract().response();
+    }
+
+    public Response loginUser(String username, String password, int statusCode) {
+        return get(LOGIN, Map.of("username", username, "password", password))
+                .then()
+                .spec(responseSpec(statusCode, ContentType.JSON))
+                .extract().response();
+    }
+
+    public Response loginUser(String username, String password, String expires, int limit, int statusCode) {
+        return get(LOGIN, Map.of("username", username, "password", password),
+                Map.of("X-Expires-After", expires, "X-Rate-Limit", limit))
+                .then()
+                .spec(responseSpec(statusCode, ContentType.JSON))
                 .extract().response();
     }
 }

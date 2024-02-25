@@ -34,4 +34,6 @@ public class AssertMessages {
     public static final String USER_PASSWORD_WRONG = "User has wrong password";
     public static final String USER_PHONE_WRONG = "User has wrong phone";
     public static final String USER_STATUS_WRONG = "User's status is wrong";
+    public static final String RATE_LIMIT_WRONG = "X-Rate-Limit does not match expected value";
+    public static final String EXPIRES_AFTER_WRONG = "X-Expires-After does not match expected value";
 }

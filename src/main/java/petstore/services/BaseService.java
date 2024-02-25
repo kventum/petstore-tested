@@ -59,6 +59,15 @@ public abstract class BaseService {
                 .get(endpoint);
     }
 
+    public Response get(String endpoint, Map<String, String> queries, Map<String, Object> headers) {
+        return given()
+                .spec(REQUEST_SPECIFICATION)
+                .log().all()
+                .queryParams(queries)
+                .headers(headers)
+                .get(endpoint);
+    }
+
     public Response get(String endpoint, String param, Object value) {
         return given()
                 .spec(REQUEST_SPECIFICATION)
