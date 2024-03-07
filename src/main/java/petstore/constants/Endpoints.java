@@ -17,4 +17,5 @@ public class Endpoints {
     public static final String CREATE_WITH_ARRAY = "/createWithArray";
     public static final String CREATE_WITH_LIST = "/createWithList";
     public static final String USER_BY_NAME = "/{username}";
+    public static final String LOGIN = "/login";
 }

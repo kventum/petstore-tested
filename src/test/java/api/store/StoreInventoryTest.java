@@ -11,6 +11,7 @@ import petstore.services.StoreService;
 import static org.apache.http.HttpStatus.SC_OK;
 import static petstore.constants.Others.POSITIVE;
 
+@DisplayName("Тесты на проверку инвентаря магазина")
 public class StoreInventoryTest extends BaseTest {
 
     private final StoreService storeService = new StoreService();

@@ -1,17 +1,17 @@
 package petstore.models;
 
-import lombok.Builder;
-import lombok.Getter;
+import lombok.*;
 
-@Getter
+@Getter @Setter
 @Builder
+@NoArgsConstructor @AllArgsConstructor
 public class User {
-    Long id;
-    String username;
-    String firstName;
-    String lastName;
-    String email;
-    String password;
-    String phone;
-    int userStatus;
+    private Long id;
+    private String username;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String password;
+    private String phone;
+    private int userStatus;
 }
