@@ -92,6 +92,15 @@ public abstract class BaseService {
                 .put(endpoint);
     }
 
+    public Response put(String endpoint, String param, Object value, Object requestBody) {
+        return given()
+                .spec(REQUEST_SPECIFICATION)
+                .log().all()
+                .pathParam(param, value)
+                .body(requestBody)
+                .put(endpoint);
+    }
+
     public Response delete(String endpoint, String param, Object value) {
         return given()
                 .spec(REQUEST_SPECIFICATION)

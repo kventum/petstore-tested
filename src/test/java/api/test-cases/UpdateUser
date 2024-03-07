@@ -1,0 +1,6 @@
+PUT /user/{username}
+
+- Update all fields except of username with valid data
+- Update all fields with valid data
+- Update all fields with invalid values
+- Update a nonexistent user

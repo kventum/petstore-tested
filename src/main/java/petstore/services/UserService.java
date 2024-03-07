@@ -33,7 +33,14 @@ public class UserService extends BaseService{
     public Response deleteUser(String username, int statusCode) {
         return delete(USER_BY_NAME, "username", username)
                 .then()
-                .spec(responseSpec(statusCode, ContentType.JSON))
+                .spec(responseSpec(statusCode))
+                .extract().response();
+    }
+
+    public Response deleteUser(String username, int statusCode, ContentType contentType) {
+        return delete(USER_BY_NAME, "username", username)
+                .then()
+                .spec(responseSpec(statusCode, contentType))
                 .extract().response();
     }
 
@@ -61,6 +68,13 @@ public class UserService extends BaseService{
     public Response loginUser(String username, String password, String expires, int limit, int statusCode) {
         return get(LOGIN, Map.of("username", username, "password", password),
                 Map.of("X-Expires-After", expires, "X-Rate-Limit", limit))
+                .then()
+                .spec(responseSpec(statusCode, ContentType.JSON))
+                .extract().response();
+    }
+
+    public Response updateUser(User requestBody, String userName, int statusCode) {
+        return put(USER_BY_NAME, "username", userName, requestBody)
                 .then()
                 .spec(responseSpec(statusCode, ContentType.JSON))
                 .extract().response();

@@ -1,12 +1,11 @@
+GET /findByStatus
 
-/findByStatus
-- id заполнен
-- блок category не пустой
-    - id заполнен
-- имя заполнено строкой
-- ссылки на фото есть - 1 или несколько
-- статус соответствует статусной модели
-- фильтрация по query=статус (1 статус, 2, 3 статуса сразу)
-- без фильтров по статусу в ответе не приходят питомцы
-- в ответе Content-type=application/json
-- ответ вернулся с текущей датой и временем
+- id is filled
+- category block is not empty
+    - id is filled
+- name is filled with a string
+- links to one or more photos exist
+- status matches to the status model
+- filter by query=status (1 status, and 2-3 statuses at once)
+- no pets in the response without status filters in query
+- response's content type equals application/json
