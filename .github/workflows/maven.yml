@@ -14,10 +14,11 @@ on:
       deployment_target:
         description: Choose target
         required: true
+        default: all
         type: choice
         options:
-          - all
           - pets
+          - all
       
 
 jobs:
@@ -34,8 +35,8 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: all
-      if: "github.event.input.deployment_target == 'all'"
+      if: "github.event.inputs.deployment_target == 'all'"
       run: mvn test io.qameta.allure:allure-maven:2.12.0:serve -Dtest=api/* -DfailIfNoTests=false
     - name: pets
-      if: "github.event.input.deployment_target == 'pets'"
+      if: "github.event.inputs.deployment_target == 'pets'"
       run: mvn test io.qameta.allure:allure-maven:2.12.0:serve -Dtest=api/pets/* -DfailIfNoTests=false
