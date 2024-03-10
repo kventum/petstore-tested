@@ -18,8 +18,6 @@ on:
         options:
           - all
           - pets
-          - store
-          - users
       
 
 jobs:
