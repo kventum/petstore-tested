@@ -37,10 +37,10 @@ jobs:
         cache: maven
     - name: all
       if: "github.event.input.deployment_target == 'all'"
-      run: mvn test -Dtest=api.* -DfailIfNoTests=false
+      run: mvn test io.qameta.allure:allure-maven:2.12.0:serve -Dtest=api/* -DfailIfNoTests=false
     - name: pets
       if: "github.event.input.deployment_target == 'pets'"
-      run: mvn test -Dtest=api/pets/* -DfailIfNoTests=false
+      run: mvn test io.qameta.allure:allure-maven:2.12.0:serve -Dtest=api/pets/* -DfailIfNoTests=false
 
 
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
