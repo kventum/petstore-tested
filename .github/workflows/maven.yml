@@ -18,6 +18,8 @@ on:
         type: choice
         options:
           - pets
+          - store
+          - users
           - all
       
 
@@ -40,3 +42,29 @@ jobs:
     - name: pets
       if: "github.event.inputs.deployment_target == 'pets'"
       run: mvn test -Dtest=api/pets/* -DfailIfNoTests=false
+    - name: store
+      if: "github.event.inputs.deployment_target == 'store'"
+      run: mvn test -Dtest=api/store/* -DfailIfNoTests=false
+    - name: users
+      if: "github.event.inputs.deployment_target == 'users'"
+      run: mvn test -Dtest=api/users/* -DfailIfNoTests=false
+    - name: Copy History
+      uses: actions/checkout@v2
+      if: always()
+      with:
+        ref: gh-pages
+        path: gh-pages
+    - name: Build Report
+      uses: simple-elf/allure-report-action@master
+      if: always()
+      with:
+        allure_results: target/allure-results
+        allure_history: allure-history
+        keep_reports: 10
+    - name: Publish Report
+      if: always()
+      uses: peaceiris/actions-gh-pages@v2
+      env:
+        PERSONAL_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        PUBLISH_BRANCH: gh-pages
+        PUBLISH_DIR: allure-history
