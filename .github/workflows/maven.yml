@@ -41,7 +41,7 @@ jobs:
       run: mvn test -Dtest=api/* -DfailIfNoTests=false allure:report
     - name: pets
       if: "github.event.inputs.deployment_target == 'pets'"
-      run: mvn test -Dtest=api/pets/* -DfailIfNoTests=false allure:report
+      run: mvn test -Dtest=api/pets/* -DfailIfNoTests=false
     - name: store
       if: "github.event.inputs.deployment_target == 'store'"
       run: mvn test -Dtest=api/store/* -DfailIfNoTests=false allure:report
@@ -58,7 +58,7 @@ jobs:
       uses: simple-elf/allure-report-action@master
       if: always()
       with:
-        allure_results: build/allure-results
+        allure_results: target/allure-results
         allure_history: allure-history
         keep_reports: 20
     - name: Publish Report
