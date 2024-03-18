@@ -48,13 +48,6 @@ jobs:
     - name: users
       if: "github.event.inputs.deployment_target == 'users'"
       run: mvn test -Dtest=api/users/* -DfailIfNoTests=false allure:report
-    - name: Store allure results
-      uses: actions/upload-artifact@v3
-      with:
-        name: allure-results
-        path:
-          allure-maven-plugin
-        retention-days: 1
     - name: Copy History
       uses: actions/checkout@v2
       if: always()
