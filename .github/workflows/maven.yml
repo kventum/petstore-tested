@@ -36,9 +36,6 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: maven
-    - name: all
-      if: "github.event.inputs.deployment_target == 'all'"
-      run: mvn test -Dtest=api/* -DfailIfNoTests=false
     - name: pets
       if: "github.event.inputs.deployment_target == 'pets'"
       run: mvn test -Dtest=api/pets/* -DfailIfNoTests=false
